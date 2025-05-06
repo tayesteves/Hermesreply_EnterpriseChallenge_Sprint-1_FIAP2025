@@ -45,7 +45,7 @@ A solução combina sensores, protocolo MQTT, análise com IA e visualização e
   - Confiabilidade em redes instáveis.
 - Inicialmente configurado com o **broker Mosquitto** em ambiente local.
 - Segurança: autenticação por usuário e senha no broker MQTT.
-- Implementação inicial com broker MQTT local (Mosquitto), com potencial migração futura para **AWS IoT Core**.
+- Potencial migração futura para **AWS IoT Core**.
 
 ### 3. Camada de Processamento
 - Responsável pelo armazenamento, análise dos dados e aplicação de técnicas de inteligência artificial para detecção de anomalias e previsão de falhas.
@@ -106,7 +106,7 @@ A solução combina sensores, protocolo MQTT, análise com IA e visualização e
 - Criar o banco de dados Oracle e populá-lo com dados coletados.
 - Desenvolver e treinar os modelos de IA para detecção de anomalias e previsão de falhas.
 - Testar os modelos com dados simulados para validação inicial.
- -Desenvolver dashboards interativos e configurar sua atualização em tempo real.
+- Desenvolver dashboards interativos e configurar sua atualização em tempo real.
 - Implementar o sistema de alertas automáticos e recomendações preventivas.
 - Documentar os testes, aprendizados e resultados obtidos.
 
