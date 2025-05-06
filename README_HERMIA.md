@@ -87,6 +87,14 @@ A solução combina sensores, protocolo MQTT, análise com IA e visualização e
 
 ---
 
+### Diagrama estrutural 
+
+<p align="center">
+  <img src="diagrama.png" alt="Diagrama Estrutural" width="600"/>
+</p>
+
+---
+
 ## 🛠️ Tecnologias Utilizadas
 - **Hardware:** ESP32, sensores industriais.
 - **Linguagem:** Python, com bibliotecas Scikit-learn, PyCaret, Pandas, Prophet, IsolationForest.
