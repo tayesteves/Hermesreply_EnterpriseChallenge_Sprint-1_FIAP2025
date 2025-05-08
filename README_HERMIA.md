@@ -31,23 +31,29 @@ HERMIA opera com sensores instalados em pontos estratégicos das máquinas indus
 
 As informações são exibidas em dashboards interativos no Power BI e notificações são disparadas automaticamente via e-mail ou WhatsApp, permitindo decisões rápidas e baseadas em evidências. Projetado para ser escalável e seguro, o sistema suporta a adição de novos sensores e algoritmos, com autenticação no broker e controle de integridade dos dados. Em ambientes mais complexos, HERMIA pode evoluir para a nuvem (AWS IoT Core e EC2), garantindo maior disponibilidade e alinhamento com a Indústria 4.0.
 
-### 1. Camada de Percepção
-- Responsável pela coleta de dados em tempo real de pontos críticos das máquinas industriais.
-- Dados monitorados serão definidos conforme os sensores fornecidos pela empresa. Possíveis variáveis:
-  - Temperatura;
-  - Pressão;
-  - Vibração;
-  - Outros dados a serem definidos.
-- Frequência de coleta de dados adaptável de acordo com a necessidade de cada tipo de dado e sensor. 
-- Localização dos Sensores: 
-  - Pontos críticos das máquinas: motores, válvulas, rolamentos ou onde o dado possa ser captado com mais precisão.
-- Os sensores estão conectados a um microcontrolador **ESP32**, que envia os dados via Wi-Fi.
-- Caso haja desconexão, os dados são armazenados localmente em buffer e reenviados automaticamente.
-- A confiabilidade será garantida por:
-  - **Calibração inicial**: Sensores são ajustados antes da instalação para leituras precisas.
-  - **Validação no ESP32**: O microcontrolador verifica valores inconsistentes (ex.: temperatura > 100°C ou vibração fora da faixa 1-10 Hz) e descarta leituras           inválidas antes do envio.
-  - **Verificação no sistema**: Um script Python compara novos dados com faixas aceitáveis (baseadas em históricos) e sinaliza anomalias para revisão.
-  - **Manutenção periódica**: Sensores serão recalibrados regularmente para evitar desvios.
+### 1. Camada de Percepção - Coleta de Dados
+A primeira camada do sistema HERMIA é responsável por realizar a coleta de dados em tempo real diretamente dos pontos críticos das máquinas industriais. Esses dados são essenciais para alimentar o pipeline de análise e previsão, permitindo que o sistema identifique padrões e anomalias de forma precisa.
+
+📍 Localização e tipos de sensores:
+- Os sensores serão instalados em componentes estratégicos, como motores, válvulas, rolamentos e outras áreas sujeitas a desgaste ou variações operacionais.
+- As variáveis monitoradas serão definidas conforme as necessidades posteriormente informadas. Entre os dados potenciais estão:
+    - Temperatura;
+    - Pressão;
+    - Vibração;
+    - Corrente elétrica;
+    - Outras variáveis a serem definidas conforme a planta industrial.
+
+🔁 Frequência e envio dos dados:
+A frequência de leitura será adaptável por tipo de sensor e criticidade do equipamento:
+Exemplo: leituras de vibração a cada 2 segundos, temperatura a cada 10 segundos.
+Os sensores estarão conectados a um microcontrolador ESP32, que fará a leitura dos dados e os enviará via Wi-Fi, utilizando o protocolo MQTT.
+
+🧠 Confiabilidade da leitura:
+- Calibração inicial: sensores ajustados antes da instalação para garantir precisão desde o início.
+- Validação embarcada: o ESP32 verifica leituras inconsistentes (ex.: temperaturas irreais, vibrações fora do intervalo esperado) e descarta dados inválidos.
+- Verificação adicional: um script Python, já no sistema, compara os dados com faixas históricas aceitáveis e sinaliza possíveis anomalias.
+- Resiliência: em caso de perda de conexão, o ESP32 armazena temporariamente os dados em buffer e realiza o reenvio automático após o restabelecimento do sinal.
+- Manutenção periódica: os sensores serão recalibrados em intervalos programados para evitar desvios e degradação nas medições.
 
 ### 2. Camada de Comunicação
 Esta camada é responsável pela transmissão segura, modular e eficiente dos dados coletados pelos sensores até a camada de processamento. O microcontrolador ESP32 utiliza o protocolo MQTT para enviar os dados em tempo real a um broker local (Mosquitto), que os repassa a um script Python assinante. Este, por sua vez, insere os dados no banco de dados Oracle. A arquitetura garante baixa latência, escalabilidade e resiliência, além de permitir expansão futura para soluções em nuvem.
